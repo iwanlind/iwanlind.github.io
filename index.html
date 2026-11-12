@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iwanlind</title>
+
+<!-- иконка сайта (меньшее разрешение) -->
+<link rel="icon" type="image/jpeg" href="avatar.jpg">
+<link rel="apple-touch-icon" href="avatar.jpg">
+
+<!-- канонический URL -->
+<link rel="canonical" href="https://iwanlind.github.io/">
+
+<!-- Open Graph: превью при шаринге -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="iwanlind">
+<meta property="og:description" content="Музыка, соцсети, всё в одном месте">
+<meta property="og:image" content="https://iwanlind.github.io/avatar_h.jpg">
+<meta property="og:url" content="https://iwanlind.github.io/">
+<meta property="og:site_name" content="iwanlind">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="iwanlind">
+<meta name="twitter:description" content="Музыка, соцсети, всё в одном месте">
+<meta name="twitter:image" content="https://iwanlind.github.io/avatar_h.jpg">
+
+<!-- цвет адресной строки на мобилке (тёмная тема) -->
+<meta name="theme-color" content="#0a0618">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #0a0618;
+    --text: #f5ecff;
+    --text-dim: rgba(220, 200, 240, 0.75);
+    --text-faint: rgba(255, 255, 255, 0.3);
+    --divider: rgba(200, 160, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-top: rgba(255, 255, 255, 0.18);
+    --marble-opacity: 1;
+    --card-bg: rgba(255, 255, 255, 0.06);
+    --card-hover-shadow: rgba(160, 120, 220, 0.35);
+  }
+  
+  body.light {
+    --bg: #fce8f0;
+    --text: #3a1f3a;
+    --text-dim: rgba(90, 40, 90, 0.75);
+    --text-faint: rgba(90, 40, 90, 0.45);
+    --divider: rgba(230, 120, 180, 0.7);
+    --glass-border: rgba(230, 140, 190, 0.45);
+    --glass-top: rgba(255, 255, 255, 0.6);
+    --marble-opacity: 0.65;
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --card-hover-shadow: rgba(230, 120, 180, 0.4);
+  }
+  
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+    transition: background 0.5s, color 0.5s;
+  }
+  
+  .bg-marble {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    opacity: var(--marble-opacity); transition: opacity 0.5s;
+  }
+  .bg-marble::before, .bg-marble::after {
+    content: ''; position: absolute; inset: -20%;
+    background: 
+      radial-gradient(ellipse 40% 30% at 30% 30%, rgba(180, 100, 255, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 40% at 70% 70%, rgba(80, 200, 255, 0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 35% at 50% 50%, rgba(255, 100, 200, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 25% 30% at 80% 20%, rgba(100, 255, 200, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 25% at 20% 80%, rgba(255, 180, 100, 0.10) 0%, transparent 60%);
+    animation: marbleShift 18s ease-in-out infinite;
+  }
+  .bg-marble::after {
+    background: 
+      radial-gradient(ellipse 35% 30% at 60% 25%, rgba(140, 80, 255, 0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 35% at 35% 75%, rgba(60, 180, 255, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 25% 25% at 75% 55%, rgba(255, 80, 180, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 25% at 15% 40%, rgba(120, 255, 200, 0.10) 0%, transparent 60%);
+    animation: marbleShift 22s ease-in-out infinite reverse;
+    animation-delay: -8s; mix-blend-mode: screen;
+  }
+  
+  body.light .bg-marble::before {
+    background: 
+      radial-gradient(ellipse 45% 35% at 30% 30%, rgba(255, 140, 190, 0.40) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 45% at 70% 70%, rgba(255, 180, 140, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 40% at 50% 50%, rgba(230, 130, 220, 0.30) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 35% at 80% 20%, rgba(255, 200, 160, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 30% at 20% 80%, rgba(200, 160, 255, 0.25) 0%, transparent 60%);
+  }
+  body.light .bg-marble::after {
+    background: 
+      radial-gradient(ellipse 40% 35% at 60% 25%, rgba(255, 120, 180, 0.30) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 40% at 35% 75%, rgba(255, 160, 120, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 75% 55%, rgba(240, 140, 220, 0.28) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 30% at 15% 40%, rgba(220, 180, 255, 0.22) 0%, transparent 60%);
+    mix-blend-mode: multiply;
+  }
+  
+  @keyframes marbleShift {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(3%, -2%) scale(1.08) rotate(2deg); }
+    50% { transform: translate(-2%, 3%) scale(0.95) rotate(-1deg); }
+    75% { transform: translate(2%, 2%) scale(1.05) rotate(1.5deg); }
+  }
+  
+  .sparkles {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden;
+    transition: opacity 0.5s;
+  }
+  body.light .sparkles { opacity: 0; }
+  
+  .sparkles span {
+    position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #fff;
+    box-shadow: 0 0 8px 2px rgba(200, 160, 255, 0.8);
+    animation: float 12s infinite ease-in-out; opacity: 0;
+  }
+  .sparkles span:nth-child(1) { left: 15%; top: 20%; animation-delay: 0s; }
+  .sparkles span:nth-child(2) { left: 80%; top: 30%; animation-delay: 2s; background: #a0e0ff; width: 3px; height: 3px; }
+  .sparkles span:nth-child(3) { left: 25%; top: 75%; animation-delay: 4s; background: #ffb0e0; width: 5px; height: 5px; }
+  .sparkles span:nth-child(4) { left: 70%; top: 65%; animation-delay: 1s; width: 3px; height: 3px; }
+  .sparkles span:nth-child(5) { left: 50%; top: 10%; animation-delay: 3s; background: #b0ffd0; width: 5px; height: 5px; }
+  .sparkles span:nth-child(6) { left: 90%; top: 85%; animation-delay: 5s; background: #ffd0a0; width: 3px; height: 3px; }
+  .sparkles span:nth-child(7) { left: 8%; top: 50%; animation-delay: 2.5s; }
+  .sparkles span:nth-child(8) { left: 60%; top: 90%; animation-delay: 3.5s; background: #c0a0ff; width: 5px; height: 5px; }
+  .sparkles span:nth-child(9) { left: 35%; top: 15%; animation-delay: 6s; background: #a0e0ff; width: 3px; height: 3px; }
+  .sparkles span:nth-child(10) { left: 45%; top: 85%; animation-delay: 7s; }
+  .sparkles span:nth-child(11) { left: 5%; top: 35%; animation-delay: 1.5s; background: #ffb0e0; width: 5px; height: 5px; }
+  .sparkles span:nth-child(12) { left: 95%; top: 55%; animation-delay: 4.5s; background: #b0ffd0; width: 3px; height: 3px; }
+  .sparkles span:nth-child(13) { left: 55%; top: 45%; animation-delay: 8s; background: #ffd0a0; width: 4px; height: 4px; }
+  .sparkles span:nth-child(14) { left: 30%; top: 60%; animation-delay: 5.5s; width: 5px; height: 5px; }
+  .sparkles span:nth-child(15) { left: 75%; top: 10%; animation-delay: 9s; background: #c0a0ff; width: 3px; height: 3px; }
+  .sparkles span:nth-child(16) { left: 20%; top: 95%; animation-delay: 2.2s; background: #a0e0ff; width: 5px; height: 5px; }
+  .sparkles span:nth-child(17) { left: 85%; top: 40%; animation-delay: 6.5s; width: 3px; height: 3px; }
+  .sparkles span:nth-child(18) { left: 40%; top: 30%; animation-delay: 10s; background: #ffb0e0; width: 4px; height: 4px; }
+  .sparkles span:nth-child(19) { left: 65%; top: 80%; animation-delay: 3.8s; width: 5px; height: 5px; background: #b0ffd0; }
+  .sparkles span:nth-child(20) { left: 12%; top: 70%; animation-delay: 7.5s; width: 3px; height: 3px; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(0.8); opacity: 0; }
+    15% { opacity: 1; }
+    50% { transform: translateY(-80px) scale(1.4); opacity: 0.9; }
+    85% { opacity: 0.5; }
+  }
+  
+  .petals {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden;
+    opacity: 0; transition: opacity 0.5s;
+  }
+  body.light .petals { opacity: 1; }
+  
+  .petals span {
+    position: absolute;
+    top: -20px;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, #ffd0e0 0%, #ff9ec0 60%, #f57aa8 100%);
+    border-radius: 50% 0 50% 0;
+    box-shadow: 0 0 6px rgba(255, 140, 190, 0.5);
+    animation: petalFall 14s linear infinite;
+    opacity: 0;
+  }
+  
+  .petals span:nth-child(1)  { left: 5%;  animation-delay: 0s;   animation-duration: 13s; }
+  .petals span:nth-child(2)  { left: 12%; animation-delay: 2s;   animation-duration: 16s; }
+  .petals span:nth-child(3)  { left: 20%; animation-delay: 4s;   animation-duration: 12s; transform: scale(0.8); }
+  .petals span:nth-child(4)  { left: 28%; animation-delay: 1s;   animation-duration: 15s; }
+  .petals span:nth-child(5)  { left: 35%; animation-delay: 6s;   animation-duration: 14s; transform: scale(1.2); }
+  .petals span:nth-child(6)  { left: 42%; animation-delay: 3s;   animation-duration: 17s; }
+  .petals span:nth-child(7)  { left: 50%; animation-delay: 8s;   animation-duration: 13s; transform: scale(0.9); }
+  .petals span:nth-child(8)  { left: 58%; animation-delay: 5s;   animation-duration: 15s; }
+  .petals span:nth-child(9)  { left: 65%; animation-delay: 9s;   animation-duration: 12s; }
+  .petals span:nth-child(10) { left: 72%; animation-delay: 2.5s; animation-duration: 16s; transform: scale(1.1); }
+  .petals span:nth-child(11) { left: 80%; animation-delay: 7s;   animation-duration: 14s; }
+  .petals span:nth-child(12) { left: 88%; animation-delay: 1.5s; animation-duration: 13s; }
+  .petals span:nth-child(13) { left: 95%; animation-delay: 5.5s; animation-duration: 15s; transform: scale(0.8); }
+  .petals span:nth-child(14) { left: 15%; animation-delay: 10s;  animation-duration: 18s; }
+  .petals span:nth-child(15) { left: 55%; animation-delay: 11s;  animation-duration: 14s; transform: scale(1.15); }
+  
+  @keyframes petalFall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.9; }
+    100% { transform: translateY(100vh) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+  
+  .theme-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 20;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--glass-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    color: var(--text); font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.5s, border-color 0.5s, color 0.5s;
+    line-height: 1; padding: 0;
+  }
+  .theme-toggle:hover { transform: scale(1.1); }
+  .theme-toggle:active { transform: scale(0.95); }
+  
+  .avatar {
+    width: 120px; height: 120px; border-radius: 50%;
+    margin: 0 auto 24px; position: relative; z-index: 2; padding: 3px;
+    background: linear-gradient(135deg, #b07ce8, #5cc8e0, #e85ca8, #5ce8a0);
+    box-shadow: 0 0 25px rgba(180, 120, 230, 0.5), 0 0 50px rgba(220, 80, 160, 0.25);
+    animation: avatarGlow 3s infinite ease-in-out;
+  }
+  body.light .avatar {
+    background: linear-gradient(135deg, #ff9ec0, #ffd0a0, #ffb0e0, #f57aa8);
+    box-shadow: 0 0 25px rgba(255, 150, 190, 0.6), 0 0 50px rgba(255, 120, 170, 0.35);
+  }
+  .avatar img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+    border: 2px solid var(--bg); transition: border-color 0.5s;
+  }
+  @keyframes avatarGlow {
+    0%, 100% { box-shadow: 0 0 25px rgba(180, 120, 230, 0.5), 0 0 50px rgba(220, 80, 160, 0.25); }
+    50% { box-shadow: 0 0 35px rgba(200, 140, 255, 0.7), 0 0 70px rgba(240, 100, 180, 0.4); }
+  }
+  
+  h1 {
+    font-size: 40px; color: var(--text); margin-bottom: 36px; text-align: center;
+    font-weight: 900; letter-spacing: 3px; position: relative; z-index: 2;
+    text-transform: lowercase;
+    -webkit-text-stroke: 1px rgba(180, 120, 255, 0.6);
+    text-shadow: 0 0 10px rgba(200, 140, 255, 0.9), 0 0 30px rgba(160, 100, 255, 0.6), 0 0 60px rgba(120, 80, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+    animation: glowPulse 3s infinite ease-in-out;
+    transition: color 0.5s;
+  }
+  body.light h1 {
+    -webkit-text-stroke: 1px rgba(230, 100, 160, 0.5);
+    text-shadow: 0 0 12px rgba(255, 140, 190, 0.8), 0 0 30px rgba(255, 100, 160, 0.5), 0 0 60px rgba(240, 80, 140, 0.3), 0 2px 4px rgba(120, 40, 80, 0.2);
+  }
+  @keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(200, 140, 255, 0.9), 0 0 30px rgba(160, 100, 255, 0.6), 0 0 60px rgba(120, 80, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5); }
+    50% { text-shadow: 0 0 15px rgba(220, 160, 255, 1), 0 0 45px rgba(180, 120, 255, 0.8), 0 0 80px rgba(140, 100, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.5); }
+  }
+  
+  .links {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    width: 100%; position: relative; z-index: 2;
+  }
+  .links a {
+    display: flex; align-items: center; justify-content: flex-start; gap: 12px;
+    width: 100%; max-width: 340px; padding: 18px 24px; border-radius: 20px;
+    text-decoration: none; font-weight: 400; font-size: 17px; color: #ffffff;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, filter 0.25s;
+    border: 1.5px solid var(--glass-border);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(20px);
+    animation: slideIn 0.5s forwards;
+    letter-spacing: 0.5px;
+  }
+  .links a::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, var(--glass-top) 0%, transparent 100%);
+    pointer-events: none; border-radius: 20px 20px 0 0;
+  }
+  .links a::after {
+    content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transition: left 0.5s; pointer-events: none;
+  }
+  .links a:hover::after { left: 130%; }
+  .links a:hover {
+    transform: translateY(-4px) scale(1.03);
+    filter: brightness(1.2) saturate(1.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .links a:active { transform: translateY(-1px) scale(0.99); }
+  @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+  .links a:nth-child(1) { animation-delay: 0.05s; }
+  .links a:nth-child(2) { animation-delay: 0.1s; }
+  .links a:nth-child(3) { animation-delay: 0.15s; }
+  .links a:nth-child(4) { animation-delay: 0.2s; }
+  .links a:nth-child(6) { animation-delay: 0.3s; }
+  .links a:nth-child(7) { animation-delay: 0.35s; }
+  .links a:nth-child(8) { animation-delay: 0.4s; }
+  .links a:nth-child(9) { animation-delay: 0.45s; }
+  
+  .divider {
+    width: 100%; max-width: 340px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--divider), rgba(160, 220, 255, 0.6), transparent);
+    margin: 8px 0; position: relative; z-index: 2; border-radius: 2px;
+    box-shadow: 0 0 12px rgba(180, 140, 255, 0.5);
+    transition: box-shadow 0.5s;
+  }
+  body.light .divider {
+    background: linear-gradient(90deg, transparent, rgba(255, 120, 180, 0.8), rgba(255, 160, 200, 0.7), transparent);
+    box-shadow: 0 0 14px rgba(255, 140, 190, 0.6);
+  }
+  .links a span.icon { font-size: 22px; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4)); }
+  
+  .telegram { background: linear-gradient(135deg, rgba(26, 106, 168, 0.85) 0%, rgba(42, 143, 208, 0.85) 50%, rgba(92, 200, 240, 0.85) 100%); box-shadow: 0 6px 24px rgba(42, 143, 208, 0.4), inset 0 0 20px rgba(92, 200, 240, 0.15); }
+  .steam { background: linear-gradient(135deg, rgba(27, 40, 56, 0.85) 0%, rgba(42, 71, 94, 0.85) 50%, rgba(102, 192, 244, 0.85) 100%); box-shadow: 0 6px 24px rgba(102, 192, 244, 0.35), inset 0 0 20px rgba(102, 192, 244, 0.15); }
+  .instagram { background: linear-gradient(135deg, rgba(232, 92, 156, 0.85) 0%, rgba(176, 74, 224, 0.85) 50%, rgba(92, 124, 232, 0.85) 100%); box-shadow: 0 6px 24px rgba(200, 80, 180, 0.4), inset 0 0 20px rgba(232, 92, 156, 0.15); }
+  .tiktok { background: linear-gradient(135deg, rgba(42, 32, 53, 0.85) 0%, rgba(74, 42, 106, 0.85) 50%, rgba(232, 92, 156, 0.85) 100%); box-shadow: 0 6px 24px rgba(120, 60, 180, 0.4), inset 0 0 20px rgba(232, 92, 156, 0.15); }
+  .spotify { background: linear-gradient(135deg, rgba(13, 58, 26, 0.85) 0%, rgba(26, 138, 58, 0.85) 50%, rgba(30, 215, 96, 0.85) 100%); box-shadow: 0 6px 24px rgba(30, 215, 96, 0.35), inset 0 0 20px rgba(30, 215, 96, 0.15); }
+  .yandex { background: linear-gradient(135deg, rgba(255, 74, 26, 0.85) 0%, rgba(232, 48, 106, 0.85) 50%, rgba(176, 42, 232, 0.85) 100%); box-shadow: 0 6px 24px rgba(220, 60, 100, 0.4), inset 0 0 20px rgba(232, 48, 106, 0.15); }
+  .apple { background: linear-gradient(135deg, rgba(42, 42, 42, 0.85) 0%, rgba(106, 106, 106, 0.85) 50%, rgba(250, 74, 106, 0.85) 100%); box-shadow: 0 6px 24px rgba(200, 80, 120, 0.35), inset 0 0 20px rgba(250, 74, 106, 0.15); }
+  .ytmusic { background: linear-gradient(135deg, rgba(138, 26, 26, 0.85) 0%, rgba(208, 58, 58, 0.85) 50%, rgba(255, 106, 58, 0.85) 100%); box-shadow: 0 6px 24px rgba(220, 80, 60, 0.4), inset 0 0 20px rgba(255, 106, 58, 0.15); }
+  
+  .player-section, .releases-section {
+    width: 100%; max-width: 340px; margin-top: 30px; position: relative; z-index: 2;
+  }
+  .section-title {
+    font-size: 13px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim); text-align: center; margin-bottom: 14px; transition: color 0.5s;
+  }
+  .player-box {
+    border-radius: 20px; border: 1.5px solid var(--glass-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 12px; overflow: hidden; transition: background 0.5s, border-color 0.5s;
+  }
+  .player-box iframe { border-radius: 14px; display: block; width: 100%; border: none; }
+  
+  .release-grid { display: flex; flex-direction: column; gap: 14px; }
+  .release-card {
+    border-radius: 20px; border: 1.5px solid var(--glass-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 12px; display: flex; align-items: center; gap: 14px;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.5s, border-color 0.5s;
+  }
+  .release-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px var(--card-hover-shadow);
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+  .release-cover {
+    width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0;
+    background: linear-gradient(135deg, #b07ce8, #5cc8e0, #e85ca8);
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+    box-shadow: 0 4px 14px rgba(160, 100, 220, 0.35);
+  }
+  body.light .release-cover {
+    background: linear-gradient(135deg, #ff9ec0, #ffd0a0, #ffb0e0);
+    box-shadow: 0 4px 14px rgba(255, 120, 170, 0.4);
+  }
+  .release-info { flex: 1; min-width: 0; }
+  .release-title {
+    font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.5s;
+  }
+  .release-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .release-links a {
+    font-size: 11px; font-weight: 500; text-decoration: none; color: var(--text-dim);
+    padding: 3px 8px; border-radius: 8px; border: 1px solid var(--glass-border);
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .release-links a:hover {
+    color: var(--text); background: rgba(180, 140, 255, 0.2);
+    border-color: rgba(200, 160, 255, 0.6);
+  }
+  body.light .release-links a:hover {
+    background: rgba(255, 140, 190, 0.25);
+    border-color: rgba(255, 120, 180, 0.6);
+  }
+  
+  .view-counter {
+    margin-top: 36px; font-size: 12px; color: var(--text-faint);
+    position: relative; z-index: 2; letter-spacing: 1px; transition: color 0.5s;
+  }
+</style>
+</head>
+<body>
+
+  <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">🌙</button>
+
+  <div class="bg-marble"></div>
+
+  <div class="sparkles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="petals">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="avatar">
+    <img src="avatar_h.jpg" alt="iwanlind">
+  </div>
+
+  <h1>iwanlind</h1>
+  
+  <div class="links">
+    <a href="https://t.me/puckfoint" class="telegram" target="_blank"><span class="icon">✈️</span> Telegram</a>
+    <a href="https://steamcommunity.com/id/iwanlind/" class="steam" target="_blank"><span class="icon">🎮</span> Steam</a>
+    <a href="https://www.instagram.com/iwanlindd?mdxt=dHE4Ymh0eHJoOWNw&utm_source=qr" class="instagram" target="_blank"><span class="icon">📸</span> Instagram</a>
+    <a href="https://www.tiktok.com/@iwanlind?_r=1&_t=ZS-9BKLAiJmk4r" class="tiktok" target="_blank"><span class="icon">🎶</span> TikTok</a>
+    
+    <div class="divider"></div>
+    
+    <a href="https://open.spotify.com/artist/3EsCPbSE7JTmrSEueRJX4z" class="spotify" target="_blank"><span class="icon">🎧</span> Spotify</a>
+    <a href="https://music.yandex.ru/artist/23062817?ref_id=880CF49C-7F51-45F7-AB8F-1EFFFA494CF0&utm_medium=copy_link" class="yandex" target="_blank"><span class="icon">🎵</span> Яндекс Музыка</a>
+    <a href="https://music.apple.com/ru/artist/system-think/1769908302" class="apple" target="_blank"><span class="icon">🎼</span> Apple Music</a>
+    <a href="https://music.youtube.com/channel/UC1NNTfUXsFB4DlX2z59F1Bg" class="ytmusic" target="_blank"><span class="icon">▶️</span> YouTube Music</a>
+  </div>
+
+  <div class="player-section">
+    <div class="section-title">Слушать</div>
+    <div class="player-box">
+      <iframe 
+        frameborder="0" 
+        allow="clipboard-write" 
+        width="100%" 
+        height="244" 
+        src="https://music.yandex.ru/iframe/album/38198686/track/142857779"
+        loading="lazy"
+        title="Glazed — system think">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="releases-section">
+    <div class="section-title">Релизы</div>
+    <div class="release-grid">
+      <div class="release-card">
+        <div class="release-cover">🎵</div>
+        <div class="release-info">
+          <div class="release-title">Glazed</div>
+          <div class="release-links">
+            <a href="https://music.yandex.ru/album/38198686/track/142857779" target="_blank">Яндекс</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-counter">👁 <span id="view-count">...</span></div>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var body = document.body;
+      
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch(e) {}
+      
+      if (saved === 'light') {
+        body.classList.add('light');
+        toggle.textContent = '☀️';
+      } else {
+        toggle.textContent = '🌙';
+      }
+      
+      toggle.addEventListener('click', function() {
+        body.classList.toggle('light');
+        var isLight = body.classList.contains('light');
+        toggle.textContent = isLight ? '☀️' : '🌙';
+        try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e) {}
+      });
+    })();
+    
+    (function() {
+      var el = document.getElementById('view-count');
+      if (!el) return;
+      var count = 0;
+      try {
+        count = parseInt(localStorage.getItem('view-count') || '0', 10) || 0;
+        count++;
+        localStorage.setItem('view-count', count);
+      } catch(e) {
+        el.textContent = '—';
+        return;
+      }
+      el.textContent = count.toLocaleString('ru-RU');
+    })();
+  </script>
+
+</body>
+</html>
